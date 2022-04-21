@@ -1,0 +1,43 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let queenid = toShow._id
+    - let queen_name = toShow.queen_name
+    - let networth = toShow.networth
+    - let queen_country = toShow.queen_country
+    div.row(class='mb-2')
+      div.mr-1 ID is
+      div #{queenid}
+    - let actionid = "/resource/queens/" + queenid
+    form(id='QueenForm', action= actionid, method="PUT")
+      div.form-group
+        label.queenAttr(for='queen_name') Queen Name
+        input#queen_name(type='text' name='queen_name', value= queen_name )
+      div.form-group
+        label.queenAttr(for='queen_country') Queen country
+        input#queen_country(type='text' name='queen_country', value= queen_country )
+      div.form-group
+        label.queenAttr(for='networth') Queen networth
+        input#networth(type='number' name='networth', value= networth )
+      input(type="submit")
+
+  script.
+    document.forms['QueenForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+      alert("Update failed " + error )
+      });
+    });

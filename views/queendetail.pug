@@ -1,0 +1,30 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let queenid = toShow._id
+    - let queenname = toShow.queen_name
+    - let networth = toShow.networth
+    - let queencountry = toShow.queen_country
+    div
+      div.row
+        div(class='queenAttr mr-3') Queen ID is:
+        div #{queenid}
+      div.row
+        div(class='queenAttr mr-3') Queen Name is:
+        div #{queenname}
+      div.row
+        div(class='queenAttr mr-3') Queen Country is:
+        div #{queencountry}
+      div.row
+        div(class='queenAttr mr-3') Queen Networth is:
+        div #{networth}
+      br
+      h3() Quick access links to view or make changes
+      br
+      button(class="btn btn-danger m-2" onclick=`window.open('/queens/delete/?id=${queenid}', '_blank')`) Delete Item
+      button(class="btn btn-warning m-2" onclick=`window.open('/queens/update/?id=${queenid}', '_blank')`) Update Item
+      button(class="btn btn-success m-2" onclick="window.open('/queens/create', '_blank');") Create new Item
+      button(class="btn btn-info m-2" onclick="window.open('/queens', '_blank');") Home Page
